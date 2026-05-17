@@ -1,0 +1,22 @@
+[project]
+name = "picotin-tracker"
+version = "0.1.0"
+description = "Conservative Hermès Picotin purchasable-inventory monitor for Codex Automations."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "playwright>=1.44.0",
+]
+
+[project.scripts]
+picotin-monitor = "picotin_monitor.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
