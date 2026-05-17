@@ -1,2 +1,1 @@
-"""Hermès Picotin purchasable-inventory monitor."""
-
+"""Picotin purchasable-inventory monitor."""

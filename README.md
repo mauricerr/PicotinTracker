@@ -1,6 +1,6 @@
-# Hermès Picotin Stock Monitor
+# Picotin Stock Monitor
 
-Conservative Playwright monitor for real purchasable Hermès US Picotin Lock 18 and Picotin Lock 22 inventory.
+Conservative Playwright monitor for real purchasable US Picotin Lock 18 and Picotin Lock 22 inventory from the official site.
 
 The monitor is intentionally quiet. It sends no notification for no stock, uncertain inventory, timeouts, partial rendering, anti-bot challenges, missing purchase controls, disabled add-to-cart controls, or sold-out language.
 

@@ -11,7 +11,7 @@ from .notifiers import choose_notifier
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run one conservative Hermès Picotin inventory poll.")
+    parser = argparse.ArgumentParser(description="Run one conservative Picotin inventory poll.")
     parser.add_argument("--env", type=Path, default=None, help="Optional .env file path.")
     return parser.parse_args()
 

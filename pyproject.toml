@@ -1,7 +1,7 @@
 [project]
 name = "picotin-tracker"
 version = "0.1.0"
-description = "Conservative Hermès Picotin purchasable-inventory monitor for Codex Automations."
+description = "Conservative Picotin purchasable-inventory monitor for Codex Automations."
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [

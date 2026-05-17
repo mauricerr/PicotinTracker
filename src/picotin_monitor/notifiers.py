@@ -26,7 +26,7 @@ class Notifier(ABC):
 def hit_message(hit: InventoryHit) -> str:
     return "\n".join(
         (
-            "Hermès Picotin inventory confirmed",
+            "Picotin inventory confirmed",
             f"Product: {hit.product_name}",
             f"Color: {hit.color}",
             f"Size: {hit.size}",
@@ -141,7 +141,7 @@ class PushoverNotifier(Notifier):
         fields = {
             "token": self.app_token,
             "user": self.user_key,
-            "title": "Hermès Picotin inventory confirmed",
+            "title": "Picotin inventory confirmed",
             "message": hit_message(hit),
             "url": hit.url,
         }
@@ -164,7 +164,7 @@ class EmailNotifier(Notifier):
 
     def send(self, hit: InventoryHit) -> None:
         msg = EmailMessage()
-        msg["Subject"] = f"Hermès {hit.product_name} {hit.color} confirmed"
+        msg["Subject"] = f"{hit.product_name} {hit.color} confirmed"
         msg["From"] = self.sender
         msg["To"] = self.recipient
         msg.set_content(hit_message(hit))
