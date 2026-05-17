@@ -17,6 +17,7 @@ jobs:
       contents: read
 
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
       PICOTIN_CACHE_PATH: .state/picotin_seen.json
       PICOTIN_SCREENSHOT_DIR: artifacts/screenshots
