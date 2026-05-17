@@ -4,6 +4,15 @@ on:
   schedule:
     - cron: "*/5 * * * *"
   workflow_dispatch:
+    inputs:
+      send_test_notification:
+        description: "Send a Discord test message and skip the inventory monitor"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 concurrency:
   group: picotin-monitor
@@ -54,7 +63,35 @@ jobs:
       - name: Prepare state directory
         run: mkdir -p .state
 
+      - name: Send Discord test notification
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.send_test_notification == 'true' }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from urllib import request
+
+          webhook = os.environ["DISCORD_WEBHOOK_URL"]
+          payload = json.dumps({
+              "content": "GitHub Actions test message from PicotinTracker. Discord secret delivery is working.",
+              "allowed_mentions": {"parse": []},
+          }).encode()
+          req = request.Request(
+              webhook,
+              data=payload,
+              headers={
+                  "Content-Type": "application/json",
+                  "User-Agent": "PicotinTracker-GitHub-Actions/1.0",
+              },
+              method="POST",
+          )
+          with request.urlopen(req, timeout=30) as response:
+              if response.status not in (200, 204):
+                  raise RuntimeError(f"Discord test failed with HTTP {response.status}")
+          PY
+
       - name: Run monitor
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.send_test_notification != 'true' }}
         run: python -m picotin_monitor.cli
 
       - name: Save dedupe cache
