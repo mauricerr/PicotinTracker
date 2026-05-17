@@ -1,0 +1,18 @@
+name: Schedule smoke test
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+    steps:
+      - name: Print schedule timestamp
+        run: date -u +"schedule smoke ran at %Y-%m-%dT%H:%M:%SZ"
