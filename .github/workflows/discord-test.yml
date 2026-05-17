@@ -1,0 +1,40 @@
+name: Discord test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+    steps:
+      - name: Send Discord test notification
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from urllib import request
+
+          webhook = os.environ["DISCORD_WEBHOOK_URL"]
+          payload = json.dumps({
+              "content": "GitHub Actions test message from PicotinTracker. Discord secret delivery is working.",
+              "allowed_mentions": {"parse": []},
+          }).encode()
+          req = request.Request(
+              webhook,
+              data=payload,
+              headers={
+                  "Content-Type": "application/json",
+                  "User-Agent": "PicotinTracker-GitHub-Actions/1.0",
+              },
+              method="POST",
+          )
+          with request.urlopen(req, timeout=30) as response:
+              if response.status not in (200, 204):
+                  raise RuntimeError(f"Discord test failed with HTTP {response.status}")
+          PY
